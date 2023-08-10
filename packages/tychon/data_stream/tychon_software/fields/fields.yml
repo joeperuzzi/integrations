@@ -1,0 +1,63 @@
+- name: id
+  description: Tychon Unique Vulnerability Id.
+  type: keyword
+- name: software
+  type: group
+  fields:
+    - name: id
+      description: Software Package Id.
+      type: keyword
+    - name: publisher
+      description: Software Publisher Name.
+      type: keyword
+    - name: uninstall
+      description: Command line for executing uninstall of the software.
+      type: text
+    - name: version_major
+      description: Major version of package version.
+      type: int
+    - name: version_minor
+      description: Minor version of package version.
+      type: int
+    - name: version_release
+      description: Third octet of package version.
+      type: int
+    - name: version_release
+      description: Fourth octet of package version.
+      type: int
+    - name: cpe
+      description: NIST-based cpe of software package.
+      type: text
+- name: script
+  type: group
+  fields:
+    - name: current_duration
+      description: Current Scanner Script Duration.
+      type: long
+    - name: current_time
+      description: Current Script datetime.
+      type: date
+    - name: name
+      description: Scanner Script Name.
+      type: keyword
+    - name: start
+      description: Scanner Start datetime.
+      type: date
+    - name: type
+      description: Scanner Script Type.
+      type: keyword
+    - name: version
+      description: Scanner Script Version.
+      type: keyword
+- name: elastic_agent
+  type: group
+  fields:
+    - name: id
+      description: Elastic Agent Id.
+      type: keyword
+    - name: snapshot
+      description: Elastic Agent snapshot.
+      type: boolean
+    - name: version
+      description: Elastic Agent Version.
+      type: keyword
