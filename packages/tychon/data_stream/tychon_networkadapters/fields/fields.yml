@@ -52,39 +52,24 @@
     - name: subnet
       description: Subnet IP
       type: ip
-    - name: subnet_bit
-      description: Subnet bit
-      type: int
     - name: is_win_server
       description: Is a Windows Server
       type: boolean
-- name: software
+- name: dhcp
   type: group
   fields:
-    - name: id
-      description: Software Package Id.
-      type: keyword
-    - name: publisher
-      description: Software Publisher Name.
-      type: keyword
-    - name: uninstall
-      description: Command line for executing uninstall of the software.
-      type: text
-    - name: version_major
-      description: Major version of package version.
-      type: int
-    - name: version_minor
-      description: Minor version of package version.
-      type: int
-    - name: version_release
-      description: Third octet of package version.
-      type: int
-    - name: version_release
-      description: Fourth octet of package version.
-      type: int
-    - name: cpe
-      description: NIST-based cpe of software package.
-      type: text
+    - name: enabled
+      description: If DHCP is enabled.
+      type: boolean
+    - name: lease_expires
+      description: Date of when the DHCP lease expires.
+      type: date
+    - name: lease_obtained
+      description: Date of when the DHCP lease was obtained.
+      type: date
+    - name: server
+      description: IP Address of the DHCP Server
+      type: ip
 - name: script
   type: group
   fields:

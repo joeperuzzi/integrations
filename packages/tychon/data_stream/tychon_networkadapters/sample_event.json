@@ -1,0 +1,16 @@
+{
+    "tychon.id": "564D3240-42F3-6AE9-5634-12D3BB4842E5",
+    "tychon.campaign": "bd31e9ba-1756-4fd5-b463-ec712ce4dd8e",
+    "tychon.realm": "TYC742586751BDC4383A8388F974883333E",
+    "dhcp.server": "10.10.10.10",
+    "dhcp.enabled": "true",
+    "dhcp.lease_obtained": "2023-06-15T21:52:47Z",
+    "dhcp.lease_expires": "2023-06-15T22:52:47Z",
+    "host.adapter.id": "4409ea4d-2643-49a4-8cdc-b665b0f8387d",
+    "host.adapter.description": "Description of the host machines adapter instance",
+    "host.ip_filter.enabled": "true",
+    "host.subnet_bit": 1,
+    "host.is_win_server": "true",
+    "event.outcome": "fail",
+    "event.created": "2023-02-07 16:28:07"
+}
