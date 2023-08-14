@@ -1,20 +1,20 @@
-title: Software Inventory
+title: TYCHON Hard drives
 type: logs
 streams:
   - input: logfile
-    title: Software Inventory
-    description: TYCHON reports on software installed on systems, this data stream reads in the results as upserts to your Elastic database.
+    title: TYCHON Hard drives
+    description: TYCHON reports on host machine drives.
     template_path: stream.yml.hbs
     vars:
       - name: paths
         type: text
-        title: Software Inventory Results
+        title: TYCHON Hard drives
         multi: true
         required: true
         show_user: true
         default:
-          - /root/systemInfo/data/tychon_softwareinventory_info.json
-          - C:\ProgramData\TYCHONCLOUD\eventlogs\tychon_softwareinventory_info.json
+          - /root/systemInfo/data/tychon_harddrives_info.json
+          - C:\ProgramData\TYCHONCLOUD\eventlogs\tychon_harddrives_info.json
       - name: tags
         type: text
         title: Tags
@@ -22,7 +22,7 @@ streams:
         required: true
         show_user: false
         default:
-          - tychon-software
+          - tychon-harddrives
       - name: processors
         type: yaml
         title: Processors
