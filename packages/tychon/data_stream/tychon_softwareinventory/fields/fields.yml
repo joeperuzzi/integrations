@@ -4,15 +4,6 @@
 - name: host
   type: group
   fields:
-    - name: adapter
-      type: group
-      fields:
-        - name: id
-          description: Adapter identifier
-          type: keyword
-        - name: description
-          description: Description
-          type: text
     - name: biossn
       description: BIOS Serial Number
       type: keyword
@@ -43,22 +34,7 @@
         - name: serial_number
           description: Serial Number of the Hardware
           type: keyword
-    - name: ip_filter
-      type: group
-      fields:
-        - name: enabled
-          description: IP filtering is enabled.
-          type: boolean
-    - name: subnet
-      description: Subnet IP
-      type: ip
-    - name: subnet_bit
-      description: Subnet bit
-      type: int
-    - name: is_win_server
-      description: Is a Windows Server
-      type: boolean
-- name: software
+- name: package
   type: group
   fields:
     - name: id

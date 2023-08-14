@@ -7,69 +7,132 @@
     - name: adapter
       type: group
       fields:
+        - name: alias
+          description: Virtual adapter aliased address.
+          type: keyword
         - name: id
           description: Adapter identifier
           type: keyword
+        - name: ip 
+          description: Adapter IP address.
+          type: ip
+        - name: ip_filter
+          type: group
+          fields:
+            - name: enabled
+              description: Is IP filtering enabled.
+              type: bool
         - name: description
           description: Description
           type: text
-    - name: biossn
-      description: BIOS Serial Number
-      type: keyword
-    - name: hardware
-      type: group 
-      fields: 
-        - name: bios
+        - name: domain
+          description: DNS Domain
+          type: text
+        - name: dhcp
           type: group
           fields:
-            - name: name  
-              description: Hardware BIOS name
-              type: text
-            - name: version  
-              description: Hardware BIOS version
-              type: text
-        - name: cpu
+            - name: enabled
+              description: If DHCP is enabled.
+              type: boolean
+            - name: lease_expires
+              description: Date of when the DHCP lease expires.
+              type: date
+            - name: lease_obtained
+              description: Date of when the DHCP lease was obtained.
+              type: date
+            - name: server
+              description: IP Address of the DHCP Server
+              type: ip
+        - name: driver
           type: group
           fields:
-            - name: caption
-              description: CPU Caption
+            - name: name
+              description: Name of the adapter driver
+              type: keyword
+            - name: file_name
+              description: File where the driver configuration is stored.
+              type: keyword
+            - name: provider
+              description: The manufacturer or entity responsible for creating a particular hardware component.
+              type: keyword
+            - name: version
+              description: Version of the driver.
+              type: keyword
+            - name: description
+              description: Description of the driver.
               type: text
-        - name: manufacturer
-          description: Name of the hardware manufacturer
-          type: text
-        - name: owner
-          description: Name of the owner of the host.
-          type: text
-        - name: serial_number
-          description: Serial Number of the Hardware
+            - name: date
+              description: Date in which the driver was installed.
+              type: date
+        - name: gateway
+          description: Gateway IP Address for the Adapter.
+          type: ip
+        - name: wins_server
+          description: Address of the Windows Server configured to use.
+          type: ip
+        - name: link_speed
+          description: Maximum data transfer rate value.
+          type: long
+        - name: mac
+          description: MAC Address for the adapter
           type: keyword
-    - name: ip_filter
-      type: group
-      fields:
-        - name: enabled
-          description: IP filtering is enabled.
-          type: boolean
-    - name: subnet
-      description: Subnet IP
-      type: ip
-    - name: is_win_server
-      description: Is a Windows Server
-      type: boolean
-- name: dhcp
-  type: group
-  fields:
-    - name: enabled
-      description: If DHCP is enabled.
-      type: boolean
-    - name: lease_expires
-      description: Date of when the DHCP lease expires.
-      type: date
-    - name: lease_obtained
-      description: Date of when the DHCP lease was obtained.
-      type: date
-    - name: server
-      description: IP Address of the DHCP Server
-      type: ip
+        - name: media
+          type: group
+          fields:
+            - name: connection_state  
+              description: Current state of the connection
+              type: keyword
+            - name: type
+              description: Media type.
+              type: keyword
+        - name: mtu
+          description: Active max transmission unit.
+          type: int
+        - name: ndis
+          type: group
+          fields:
+            - name: version
+              description: Version of the NDIS
+              type: keyword
+
+        - name: subnet
+          description: Subnet mask for adapter.
+          type: ip
+        - name: subnet_bit
+          description: Subnet mask prefix length
+          type: int
+        - name: virtual
+          description: Is a virtual adapter
+          type: bool
+        - name: vlan
+          type: group
+          fields:
+            - name: id
+              description: VLAN unique identifier.
+              type: keyword
+        - name: wifi
+          type: group
+          fields:
+            - name: authentication
+              description: Authentification type.
+              type: keyword
+            - name: band
+              description: Wireless Adapters Frequency Band supported.
+              type: keyword
+            - name: bssid
+              description: The basic service set indentifier.
+            - name: channel
+              description: Corresponds to the wireless adapters frequency band.
+              type: keyword
+            - name: cipher
+              description: Encryption cipher
+              type: keyword
+            - name: radio_type
+              description: Wireless Access Point radio type/technoology.
+              type: keyword
+            - name: signal_percent
+              description: Percentage of the wireless connection signal.
+              type: keyword
 - name: script
   type: group
   fields:
