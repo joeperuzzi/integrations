@@ -67,6 +67,37 @@
     - name: workgroup
       description: 
       type: keyword
+    - name: cpu
+      description: How many cycles the CPU can execute per second.
+      type: long
+      fields:
+        - name: speed
+          description: How many cycles the CPU can execute per second.
+          type: long
+        - name: manufacturer
+          description: Original manufacturer of the CPU.
+          type: keyword
+        - name: caption
+          description: Caption describing the CPU.
+          type: text
+        - name: name
+          description: Name of the CPU
+          type: keyword
+        - name: clockspeed
+          description: How many cycles the CPU can execute per second.
+          type: long
+        - name: family
+          description: Family of products the CPU belongs to.
+          type: keyword
+        - name: number_of_cores
+          description: Number of physical cores on CPU
+          type: int
+        - name: number_of_logical_processors
+          description: Number of logical processors
+          type: int
+        - name: virtualization_firmware_enabled
+          description: Is virtualization firmware enabled
+          type: boolean
 - name: script
   type: group
   fields:
@@ -100,65 +131,3 @@
     - name: version
       description: Elastic Agent Version.
       type: keyword
-- name: volume
-  type: group
-  fields:
-    - name: purpose
-      description: Optional description or designation for volume.
-      type: text
-    - name: file_system
-      description: Type of file system. ex. NTFS
-      type: keyword
-    - name: serial_number
-      description:  Volumes serial number. ex. 1975801541
-      type: keyword
-    - name: size
-      description: Total volume size. ex. 2027835879424
-      type: long
-    - name: percent_full
-      description: Representating percent of the volume storage spaced is used.
-      type: keyword
-    - name: block_size
-      description: Block size.
-      type: int
-    - name: drive
-      description: Numeric code used to categorize and identify different types of drives in Windows.
-      type: int
-      fields:
-        - name: type
-          description: Numeric code used to categorize and identify different types of drives in Windows.
-          type: int
-        - name: letter
-          description: Drive letter.
-          type: keyword
-    - name: freespace
-      description: Amount of free storage space remaining on drive. ex. 1444925468672
-      type: long
-    - name: power_management_supported
-      description: Is power management supported on this volume.
-      type: boolean
-    - name: dirty_bit_set
-      description: File system repair or consistency check has been set.
-      type: boolean
-    - name: id
-      description: Unique volume identifier. ex. \\?\Volume{d61c491d-c29b-476f-ba9d-fa03eb04f5c1}\
-      type: keyword
-    - name: automount
-      description: Is volume auto-mounted
-      type: boolean
-    - name: dos_device_path
-      description: DOS device name or file.
-      type: keyword
-    - name: name
-      description: Name of the volume if applicable
-      type: keyword
-    - name: system_volume
-      description: Is a system parition
-      type: boolean
-    - name: page_file_present
-      description: Has swap or supplemental memory storage.
-      type: boolean
-- name: _id
-  description: 
-  type: keyword
-  fields:

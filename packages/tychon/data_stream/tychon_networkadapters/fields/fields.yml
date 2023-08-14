@@ -66,15 +66,15 @@
           type: keyword
     - name: adapter
       description: Is DHCP enabled on host for this adapter
-      type: bool
+      type: boolean
       fields:
         - name: dhcp
           description: Is DHCP enabled on host for this adapter
-          type: bool
+          type: boolean
           fields:
             - name: enabled
               description: Is DHCP enabled on host for this adapter
-              type: bool
+              type: boolean
             - name: server
               description: DNS Server IP Address
               type: ip
@@ -115,7 +115,7 @@
               type: keyword
         - name: virtual
           description: Is this driver a virtual driver
-          type: bool
+          type: boolean
         - name: ip
           description: IP Address for the adapter
           type: ip
@@ -147,11 +147,11 @@
               type: keyword
         - name: ip_filter
           description: Is IP filtering enabled.
-          type: bool
+          type: boolean
           fields:
             - name: enabled
               description: Is IP filtering enabled.
-              type: bool
+              type: boolean
         - name: description
           description: Adapter Description
           type: text
@@ -166,11 +166,11 @@
           type: ip
         - name: wifi
           description: Is wireless enabled.
-          type: bool
+          type: boolean
           fields:
             - name: enabled
               description: Is wireless enabled.
-              type: bool
+              type: boolean
         - name: mac
           description: 
           type: keyword
