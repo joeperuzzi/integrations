@@ -54,3 +54,5 @@
   name: host.uptime
 - external: ecs
   name: host.type
+- external: ecs
+  name: host.cpu.architecture

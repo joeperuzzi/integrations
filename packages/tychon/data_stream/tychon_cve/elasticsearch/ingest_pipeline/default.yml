@@ -5,8 +5,8 @@ processors:
       field: "*"
   - set:
       if: ctx.containsKey("tychon") && ctx.tychon.containsKey("id")
-      field: host.id
-      value: "{{tychon.id}}"
+      field: tychon.id
+      value: "{{host.id}}"
   - remove:
       if: ctx.containsKey("tychon") && ctx.tychon.containsKey("id")
       field: 'tychon'

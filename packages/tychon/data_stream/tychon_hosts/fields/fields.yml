@@ -115,9 +115,6 @@
         - name: caption
           description: Description of the CPU.
           type: text
-        - name: architecture
-          description: CPU Processor's architecture. ex x86, ARM, etc.
-          type: keyword
     - name: memory
       description: System memory size in bytes
       type: long
