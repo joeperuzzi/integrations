@@ -1,0 +1,366 @@
+- name: id
+  description: Tychon Unique Vulnerability Id.
+  type: keyword
+- name: host
+  type: group
+  fields:
+    - name: biossn
+      description: BIOS Serial Number
+      type: keyword
+    - name: hardware
+      type: group
+      fields:
+        - name: bios
+          type: group
+          fields:
+            - name: name
+              description: Hardware BIOS name
+              type: text
+            - name: version
+              description: Hardware BIOS version
+              type: text
+        - name: cpu
+          type: group
+          fields:
+            - name: caption
+              description: CPU Caption
+              type: text
+        - name: manufacturer
+          description: Name of the hardware manufacturer
+          type: text
+        - name: owner
+          description: Name of the owner of the host.
+          type: text
+        - name: serial_number
+          description: Serial Number of the Hardware
+          type: keyword
+    - name: ipv4
+      description: IPv4 host address(es) as applicable.
+      type: ip
+    - name: ipv6
+      description: IPv6 host address(es) as applicable.
+      type: ip
+    - name: oem
+      type: group
+      fields:
+        - name: manufacturer
+          description: Host OEM manufacturer.
+          type: keyword
+        - name: model
+          description: Host OEM Model Number.
+          type: keyword
+    - name: os
+      type: group
+      fields:
+        - name: build
+          description: Operating System build number.
+          type: keyword
+        - name: description
+          description: Description of Host operating system value.
+          type: text
+        - name: organization
+          description: Host Operating System organization.
+          type: text
+        - name: name
+          description: 
+          type: keyword
+        - name: vendor
+          description: Vendor for the operating system.
+          type: keyword
+        - name: edition
+          description: If available, specific edition of the operation system installed
+          type: keyword
+        - name: supported_plan
+          description: Supported Plan (LTSB/C)
+          type: keyword
+        - name: extended_support_license
+          description: The operating system's extended support license.
+          type: keyword
+        - name: extended_support_license_expiration
+          description: If applicable the expiration date of the extended support license.
+          type: date
+    - name: workgroup
+      description: 
+      type: keyword
+    - name: motherboard
+      description: Motherboard's Serial Number
+      type: keyword
+      fields:
+        - name: serial_number
+          description: Motherboard's Serial Number
+          type: keyword
+        - name: chipset
+          description: Chipset description often including manufacturer and name.
+          type: keyword
+    - name: tpm
+      description: TPM module version number.
+      type: keyword
+      fields:
+        - name: version
+          description: TPM module version number.
+          type: keyword
+        - name: present
+          description:  Is TPM module present
+          type: boolean
+        - name: compliant
+          description: Is TPM compliant.
+          type: boolean
+    - name: cpu
+      description: Number of CPU cores.
+      type: int
+      fields:
+        - name: count
+          description: Number of CPU cores.
+          type: int
+        - name: caption
+          description: Description of the CPU.
+          type: text
+        - name: architecture
+          description: CPU Processor's architecture. ex x86, ARM, etc.
+          type: keyword
+    - name: memory
+      description: System memory size in bytes
+      type: long
+      fields:
+        - name: size
+          description: System memory size in bytes
+          type: long
+    - name: virtulization_status
+      description: Host's virtualization status.
+      type: keyword
+    - name: security
+      description:  Does AntiVirus software exist.
+      type: boolean
+      fields:
+        - name: antivirus
+          description:  Does AntiVirus software exist.
+          type: boolean
+          fields:
+            - name: exists
+              description:  Does AntiVirus software exist.
+              type: boolean
+            - name: name
+              description: Name of AntiVirus software present.
+              type: keyword
+            - name: state
+              description: Installed
+              type: keyword
+            - name: status
+              description: Running
+              type: keyword
+    - name: compute
+      description: Compute Location
+      type: keyword
+      fields:
+        - name: location
+          description: Compute Location
+          type: keyword
+    - name: cloue
+      description: Cloud Computing Hostname
+      type: keyword
+      fields:
+        - name: compute
+          description: Cloud Computing Hostname
+          type: keyword
+          fields:
+            - name: name
+              description: Cloud Computing Hostname
+              type: keyword
+    - name: cloud
+      description: Cloud computing resource group name.
+      type: keyword
+      fields:
+        - name: compute
+          description: Cloud computing resource group name.
+          type: keyword
+          fields:
+            - name: resource_group_name
+              description: Cloud computing resource group name.
+              type: keyword
+            - name: resource_id
+              description: Cloud computing resource Id
+              type: keyword
+            - name: subscription_id
+              description: Unique Id for cloud compute subscription.
+              type: keyword
+            - name: vm_id
+              description: Cloud computing VM unique indentifier.
+              type: keyword
+        - name: compute_tags
+          description: Cloud computing identifying tags.
+          type: keyword
+        - name: network
+          description: Cloud computing public IPv4 Address
+          type: ip
+          fields:
+            - name: public_ipv4
+              description: Cloud computing public IPv4 Address
+              type: ip
+            - name: public_ipv6
+              description: Cloud computing public IPv6 Address
+              type: ip
+        - name: hosted
+          description: Is this is a cloud hosted endpoint
+          type: boolean
+- name: script
+  type: group
+  fields:
+    - name: current_duration
+      description: Duration of script execution
+      type: float
+    - name: name
+      description: Scanner Script Name.
+      type: keyword
+    - name: current_time
+      description: DateTime of script execution completion.
+      type: date
+    - name: start
+      description: DateTime of the start of script execution.
+      type: date
+    - name: version
+      description: Version of TYCHON script.
+      type: keyword
+    - name: type
+      description: 
+      type: keyword
+- name: elastic_agent
+  type: group
+  fields:
+    - name: id
+      description: Elastic Agent Id.
+      type: keyword
+    - name: snapshot
+      description: Elastic Agent snapshot.
+      type: boolean
+    - name: version
+      description: Elastic Agent Version.
+      type: keyword
+- name: event
+  type: group
+  fields:
+    - name: deviceguard
+      description:  DeviceGuard reporting SecureBoot is available.
+      type: boolean
+      fields:
+        - name: secureboot
+          description:  DeviceGuard reporting SecureBoot is available.
+          type: boolean
+          fields:
+            - name: available
+              description:  DeviceGuard reporting SecureBoot is available.
+              type: boolean
+        - name: dmaprotection
+          description:  DeviceGuard reporting DMA Protection is available.
+          type: boolean
+          fields:
+            - name: available
+              description:  DeviceGuard reporting DMA Protection is available.
+              type: boolean
+        - name: basevirtualizationsupport
+          description:  DeviceGuard reporting Base virtualization is available.
+          type: boolean
+          fields:
+            - name: available
+              description:  DeviceGuard reporting Base virtualization is available.
+              type: boolean
+        - name: securememoverwrite
+          description:  DeviceGuard reporting Secure Memory Overwrite is available.
+          type: boolean
+          fields:
+            - name: available
+              description:  DeviceGuard reporting Secure Memory Overwrite is available.
+              type: boolean
+        - name: ueficodereadonly
+          description:  DeviceGuard reporting uefi-code read only mode is available.
+          type: boolean
+          fields:
+            - name: available
+              description:  DeviceGuard reporting uefi-code read only mode is available.
+              type: boolean
+        - name: smmsecuritymigrations
+          description:  DeviceGuard reporting System Mgmt Mode migrations are available.
+          type: boolean
+          fields:
+            - name: available
+              description:  DeviceGuard reporting System Mgmt Mode migrations are available.
+              type: boolean
+        - name: credentialguard
+          description:  DeviceGuard reporting Credential Guard is enabled.
+          type: boolean
+          fields:
+            - name: enabled
+              description:  DeviceGuard reporting Credential Guard is enabled.
+              type: boolean
+            - name: running
+              description:  DeviceGuard reporting Credential Guard is running.
+              type: boolean
+        - name: hypervisorenforcedcodeint
+          description:  DeviceGuard reporting HVCI (Hypervisor Enforced Code Integrity) is enabled.
+          type: boolean
+          fields:
+            - name: enabled
+              description:  DeviceGuard reporting HVCI (Hypervisor Enforced Code Integrity) is enabled.
+              type: boolean
+            - name: running
+              description:  DeviceGuard reporting HVCI (Hypervisor Enforced Code Integrity) is running.
+              type: boolean
+        - name: systemguardsecurelaunch
+          description:  DeviceGuard reporting Secure Launch is enabled.
+          type: boolean
+          fields:
+            - name: enabled
+              description:  DeviceGuard reporting Secure Launch is enabled.
+              type: boolean
+            - name: running
+              description:  DeviceGuard reporting Secure Launch is running.
+              type: boolean
+        - name: virtualizationbasedsecurity
+          description: Current status of DeviceGuard virtualization Based Security.
+          type: keyword
+          fields:
+            - name: status
+              description: Current status of DeviceGuard virtualization Based Security.
+              type: keyword
+        - name: version
+          description: DeviceGuard version number.
+          type: keyword
+        - name: usermodecodeintegrity
+          description: DeviceGuard User Mode Code Integrity policy enforcement status.
+          type: keyword
+          fields:
+            - name: policyenforcement
+              description: DeviceGuard User Mode Code Integrity policy enforcement status.
+              type: keyword
+    - name: ufi
+      description: Is ufi enabled
+      type: boolean
+      fields:
+        - name: enabled
+          description: Is ufi enabled
+          type: boolean
+    - name: sha256
+      description: SHA256 hash of the event.
+      type: keyword
+- name: tychon
+  type: group
+  fields:
+    - name: definition
+      description: Uniquely identifies latest TYCHON oval definition package.
+      type: date
+      fields:
+        - name: oval
+          description: Uniquely identifies latest TYCHON oval definition package.
+          type: date
+        - name: stig
+          description: Uniquely identifies latest TYCHON stig definition package.
+          type: date
+    - name: version
+      description: Unique identifier for TYCHON content package
+      type: keyword
+      fields:
+        - name: content
+          description: Unique identifier for TYCHON content package
+          type: keyword
+        - name: agent
+          description: Unique identifier for TYCHON agent
+          type: keyword

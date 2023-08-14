@@ -1,0 +1,47 @@
+---
+description: Pipeline for parsing TYCHON Software Inventory
+processors:
+  - dot_expander:
+      field: "*"
+  - set:
+      if: ctx.containsKey("tychon") && ctx.tychon.containsKey("id")
+      field: host.id
+      value: "{{tychon.id}}"
+  - remove:
+      if: ctx.containsKey("tychon") && ctx.tychon.containsKey("id")
+      field: 'tychon'
+  - set:
+      field: _id
+      value: "{{id}}"
+  - set:
+      field: "@timestamp"
+      value: "{{_ingest.timestamp}}"
+  - set:
+      field: ecs.version
+      value: 8.8.0
+  - set:
+      field: event.kind
+      value: state
+  - set:
+      field: event.module
+      value: tychon
+  - set:
+      field: event.category
+      value: [package]
+  - gsub:
+      field: host.mac
+      pattern: ":"
+      replacement: "-"      
+  - set:
+      field: event.ingested
+      value: "{{_ingest.timestamp}}"
+  - convert:
+      field: script.current_duration
+      type: float
+on_failure:
+  - set:
+      field: event.kind
+      value: pipeline_error
+  - append:
+      field: error.message
+      value: '{{{ _ingest.on_failure_message }}}'
