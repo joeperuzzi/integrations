@@ -4,13 +4,6 @@ processors:
   - dot_expander:
       field: "*"
   - set:
-      if: ctx.containsKey("tychon") && ctx.tychon.containsKey("id")
-      field: tychon.id
-      value: "{{host.id}}"
-  - remove:
-      if: ctx.containsKey("tychon") && ctx.tychon.containsKey("id")
-      field: 'tychon'
-  - set:
       field: _id
       value: "{{id}}"
   - set:

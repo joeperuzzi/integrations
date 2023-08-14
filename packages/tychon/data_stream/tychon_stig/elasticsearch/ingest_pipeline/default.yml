@@ -1,19 +1,12 @@
 ---
-description: Pipeline for parsing TYCHON Windows Patches
+description: Pipeline for parsing TYCHON STIG Results
 processors:  
   - dot_expander:
       field: "*"
   - set:
-      if: "ctx.containsKey('tychon') && ctx.tychon.containsKey('id')"
-      field: 'host.id'
-      value: '{{tychon.id}}'  
-  - remove:
-      if: "ctx.containsKey('tychon') && ctx.tychon.containsKey('id')"
-      field: 'tychon'
-  - set:
-      if: "!(ctx.containsKey('id'))"
+      if: "!(ctx.containsKey('id')) && ctx.tychon.containsKey('id') && ctx.rule.containsKey('id')"
       field: id
-      value: '{{host.id}}'  
+      value: '{{tychon.id}}_{{rule.id}}'  
   - set:      
       field: _id
       value: '{{id}}'     

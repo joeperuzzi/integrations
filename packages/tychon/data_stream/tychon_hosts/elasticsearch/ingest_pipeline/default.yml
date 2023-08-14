@@ -4,9 +4,6 @@ processors:
   - dot_expander:
       field: "*"
   - set:
-      field: tychon.id
-      value: "{{host.id}}"
-  - set:
       field: _id
       value: "{{id}}"
   - set:
