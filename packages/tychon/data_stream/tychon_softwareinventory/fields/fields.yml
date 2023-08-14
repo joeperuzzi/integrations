@@ -8,15 +8,15 @@
       description: BIOS Serial Number
       type: keyword
     - name: hardware
-      type: group 
-      fields: 
+      type: group
+      fields:
         - name: bios
           type: group
           fields:
-            - name: name  
+            - name: name
               description: Hardware BIOS name
               type: text
-            - name: version  
+            - name: version
               description: Hardware BIOS version
               type: text
         - name: cpu
@@ -34,53 +34,59 @@
         - name: serial_number
           description: Serial Number of the Hardware
           type: keyword
-- name: package
-  type: group
-  fields:
-    - name: id
-      description: Software Package Id.
+    - name: ipv4
+      description: IPv4 host address(es) as applicable.
+      type: ip
+    - name: ipv6
+      description: IPv6 host address(es) as applicable.
+      type: ip
+    - name: oem
+      type: group
+      fields:
+        - name: manufacturer
+          description: Host OEM manufacturer.
+          type: keyword
+        - name: model
+          description: Host OEM Model Number.
+          type: keyword
+    - name: os
+      type: group
+      fields:
+        - name: build
+          description: Operating System build number.
+          type: keyword
+        - name: description
+          description: Description of Host operating system value.
+          type: text
+        - name: organization
+          description: Host Operating System organization.
+          type: text
+        - name: name
+          description: 
+          type: keyword
+    - name: workgroup
+      description: 
       type: keyword
-    - name: publisher
-      description: Software Publisher Name.
-      type: keyword
-    - name: uninstall
-      description: Command line for executing uninstall of the software.
-      type: text
-    - name: version_major
-      description: Major version of package version.
-      type: int
-    - name: version_minor
-      description: Minor version of package version.
-      type: int
-    - name: version_release
-      description: Third octet of package version.
-      type: int
-    - name: version_release
-      description: Fourth octet of package version.
-      type: int
-    - name: cpe
-      description: NIST-based cpe of software package.
-      type: text
 - name: script
   type: group
   fields:
     - name: current_duration
-      description: Current Scanner Script Duration.
-      type: long
-    - name: current_time
-      description: Current Script datetime.
-      type: date
+      description: Duration of script execution
+      type: float
     - name: name
       description: Scanner Script Name.
       type: keyword
-    - name: start
-      description: Scanner Start datetime.
+    - name: current_time
+      description: DateTime of script execution completion.
       type: date
-    - name: type
-      description: Scanner Script Type.
-      type: keyword
+    - name: start
+      description: DateTime of the start of script execution.
+      type: date
     - name: version
-      description: Scanner Script Version.
+      description: Version of TYCHON script.
+      type: keyword
+    - name: type
+      description: 
       type: keyword
 - name: elastic_agent
   type: group
@@ -93,4 +99,31 @@
       type: boolean
     - name: version
       description: Elastic Agent Version.
+      type: keyword
+- name: package
+  type: group
+  fields:
+    - name: version_release
+      description: Numeric value representing fourth octet of software's version number.
+      type: int
+    - name: publisher
+      description: Software's publishing company or entity.
+      type: text
+    - name: id
+      description: Software's unique identifier if applicable.
+      type: keyword
+    - name: version_build
+      description: Numeric value representing fourth octet of software's version number.
+      type: int
+    - name: uninstall
+      description: 
+      type: keyword
+    - name: version_major
+      description: Numeric value representing first octet of software's version number.
+      type: int
+    - name: version_minor
+      description: Numeric value representing second octet of software's version number.
+      type: int
+    - name: cpe
+      description: NIST based identifier for software package.
       type: keyword

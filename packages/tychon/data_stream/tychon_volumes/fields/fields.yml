@@ -4,26 +4,89 @@
 - name: host
   type: group
   fields:
+    - name: biossn
+      description: BIOS Serial Number
+      type: keyword
+    - name: hardware
+      type: group
+      fields:
+        - name: bios
+          type: group
+          fields:
+            - name: name
+              description: Hardware BIOS name
+              type: text
+            - name: version
+              description: Hardware BIOS version
+              type: text
+        - name: cpu
+          type: group
+          fields:
+            - name: caption
+              description: CPU Caption
+              type: text
+        - name: manufacturer
+          description: Name of the hardware manufacturer
+          type: text
+        - name: owner
+          description: Name of the owner of the host.
+          type: text
+        - name: serial_number
+          description: Serial Number of the Hardware
+          type: keyword
+    - name: ipv4
+      description: IPv4 host address(es) as applicable.
+      type: ip
+    - name: ipv6
+      description: IPv6 host address(es) as applicable.
+      type: ip
+    - name: oem
+      type: group
+      fields:
+        - name: manufacturer
+          description: Host OEM manufacturer.
+          type: keyword
+        - name: model
+          description: Host OEM Model Number.
+          type: keyword
+    - name: os
+      type: group
+      fields:
+        - name: build
+          description: Operating System build number.
+          type: keyword
+        - name: description
+          description: Description of Host operating system value.
+          type: text
+        - name: organization
+          description: Host Operating System organization.
+          type: text
+        - name: name
+          description: 
+          type: keyword
+    - name: workgroup
+      description: 
+      type: keyword
 - name: script
   type: group
   fields:
     - name: current_duration
-      description: Current Scanner Script Duration.
-      type: long
-    - name: current_time
-      description: Current Script datetime.
-      type: date
+      description: Duration of script execution
+      type: float
     - name: name
       description: Scanner Script Name.
       type: keyword
-    - name: start
-      description: Scanner Start datetime.
+    - name: current_time
+      description: DateTime of script execution completion.
       type: date
-    - name: type
-      description: Scanner Script Type.
-      type: keyword
+    - name: start
+      description: DateTime of the start of script execution.
+      type: date
     - name: version
-      description: Scanner Script Version.
+      description: Version of TYCHON script.
+      type: keyword
+    - name: type
+      description: 
       type: keyword
 - name: elastic_agent
   type: group
@@ -37,3 +100,65 @@
     - name: version
       description: Elastic Agent Version.
       type: keyword
+- name: volume
+  type: group
+  fields:
+    - name: purpose
+      description: Optional description or designation for volume.
+      type: text
+    - name: file_system
+      description: Type of file system. ex. NTFS
+      type: keyword
+    - name: serial_number
+      description:  Volumes serial number. ex. 1975801541
+      type: keyword
+    - name: size
+      description: Total volume size. ex. 2027835879424
+      type: long
+    - name: percent_full
+      description: Representating percent of the volume storage spaced is used.
+      type: keyword
+    - name: block_size
+      description: Block size.
+      type: int
+    - name: drive
+      description: Numeric code used to categorize and identify different types of drives in Windows.
+      type: int
+      fields:
+        - name: type
+          description: Numeric code used to categorize and identify different types of drives in Windows.
+          type: int
+        - name: letter
+          description: Drive letter.
+          type: keyword
+    - name: freespace
+      description: Amount of free storage space remaining on drive. ex. 1444925468672
+      type: long
+    - name: power_management_supported
+      description: Is power management supported on this volume.
+      type: bool
+    - name: dirty_bit_set
+      description: File system repair or consistency check has been set.
+      type: bool
+    - name: id
+      description: Unique volume identifier. ex. \\?\Volume{d61c491d-c29b-476f-ba9d-fa03eb04f5c1}\
+      type: keyword
+    - name: automount
+      description: Is volume auto-mounted
+      type: bool
+    - name: dos_device_path
+      description: DOS device name or file.
+      type: keyword
+    - name: name
+      description: Name of the volume if applicable
+      type: keyword
+    - name: system_volume
+      description: Is a system parition
+      type: bool
+    - name: page_file_present
+      description: Has swap or supplemental memory storage.
+      type: bool
+- name: _id
+  description: 
+  type: keyword
+  fields:

@@ -4,155 +4,208 @@
 - name: host
   type: group
   fields:
-    - name: adapter
+    - name: biossn
+      description: BIOS Serial Number
+      type: keyword
+    - name: hardware
       type: group
       fields:
-        - name: alias
-          description: Virtual adapter aliased address.
-          type: keyword
-        - name: id
-          description: Adapter identifier
-          type: keyword
-        - name: ip 
-          description: Adapter IP address.
-          type: ip
-        - name: ip_filter
+        - name: bios
           type: group
+          fields:
+            - name: name
+              description: Hardware BIOS name
+              type: text
+            - name: version
+              description: Hardware BIOS version
+              type: text
+        - name: cpu
+          type: group
+          fields:
+            - name: caption
+              description: CPU Caption
+              type: text
+        - name: manufacturer
+          description: Name of the hardware manufacturer
+          type: text
+        - name: owner
+          description: Name of the owner of the host.
+          type: text
+        - name: serial_number
+          description: Serial Number of the Hardware
+          type: keyword
+    - name: ipv4
+      description: IPv4 host address(es) as applicable.
+      type: ip
+    - name: ipv6
+      description: IPv6 host address(es) as applicable.
+      type: ip
+    - name: oem
+      type: group
+      fields:
+        - name: manufacturer
+          description: Host OEM manufacturer.
+          type: keyword
+        - name: model
+          description: Host OEM Model Number.
+          type: keyword
+    - name: os
+      type: group
+      fields:
+        - name: build
+          description: Operating System build number.
+          type: keyword
+        - name: description
+          description: Description of Host operating system value.
+          type: text
+        - name: organization
+          description: Host Operating System organization.
+          type: text
+        - name: name
+          description: 
+          type: keyword
+    - name: adapter
+      description: Is DHCP enabled on host for this adapter
+      type: bool
+      fields:
+        - name: dhcp
+          description: Is DHCP enabled on host for this adapter
+          type: bool
+          fields:
+            - name: enabled
+              description: Is DHCP enabled on host for this adapter
+              type: bool
+            - name: server
+              description: DNS Server IP Address
+              type: ip
+            - name: lease_obtained
+              description: DateTime DHCP lease was obtained
+              type: date
+            - name: lease_expires
+              description: DateTime DHCP lease expires on.
+              type: date
+        - name: ndis
+          description: Version of the NDIS
+          type: keyword
+          fields:
+            - name: version
+              description: Version of the NDIS
+              type: keyword
+        - name: driver
+          description: Adapter driver configuration file name.
+          type: keyword
+          fields:
+            - name: file_name
+              description: Adapter driver configuration file name.
+              type: keyword
+            - name: date
+              description: Date driver was installed.
+              type: date
+            - name: version
+              description: Driver version number. ex. 2020.4.9.0
+              type: keyword
+            - name: name
+              description: Name of the adapter driver
+              type: keyword
+            - name: description
+              description: Adapter's Driver description.
+              type: text
+            - name: provider
+              description: Adapter driver's provider.
+              type: keyword
+        - name: virtual
+          description: Is this driver a virtual driver
+          type: bool
+        - name: ip
+          description: IP Address for the adapter
+          type: ip
+        - name: subnet_bit
+          description: Subnet mask prefix length
+          type: int
+        - name: mtu
+          description: Active max transmission unit.
+          type: int
+        - name: domain
+          description: DNS Domain
+          type: text
+        - name: vlan
+          description: VLAN unique identifier if applicable.
+          type: keyword
+          fields:
+            - name: id
+              description: VLAN unique identifier if applicable.
+              type: keyword
+        - name: media
+          description: Current state of the connection
+          type: keyword
+          fields:
+            - name: connection_state
+              description: Current state of the connection
+              type: keyword
+            - name: type
+              description: Media type of adapter. ex. 802.3
+              type: keyword
+        - name: ip_filter
+          description: Is IP filtering enabled.
+          type: bool
           fields:
             - name: enabled
               description: Is IP filtering enabled.
               type: bool
         - name: description
-          description: Description
+          description: Adapter Description
           type: text
-        - name: domain
-          description: DNS Domain
-          type: text
-        - name: dhcp
-          type: group
-          fields:
-            - name: enabled
-              description: If DHCP is enabled.
-              type: boolean
-            - name: lease_expires
-              description: Date of when the DHCP lease expires.
-              type: date
-            - name: lease_obtained
-              description: Date of when the DHCP lease was obtained.
-              type: date
-            - name: server
-              description: IP Address of the DHCP Server
-              type: ip
-        - name: driver
-          type: group
-          fields:
-            - name: name
-              description: Name of the adapter driver
-              type: keyword
-            - name: file_name
-              description: File where the driver configuration is stored.
-              type: keyword
-            - name: provider
-              description: The manufacturer or entity responsible for creating a particular hardware component.
-              type: keyword
-            - name: version
-              description: Version of the driver.
-              type: keyword
-            - name: description
-              description: Description of the driver.
-              type: text
-            - name: date
-              description: Date in which the driver was installed.
-              type: date
-        - name: gateway
-          description: Gateway IP Address for the Adapter.
-          type: ip
-        - name: wins_server
-          description: Address of the Windows Server configured to use.
-          type: ip
+        - name: id
+          description: Adapter's unique identifier ex. {F94CD5A5-14EB-4315-91FC-370093413BD2}
+          type: keyword
         - name: link_speed
           description: Maximum data transfer rate value.
-          type: long
-        - name: mac
-          description: MAC Address for the adapter
           type: keyword
-        - name: media
-          type: group
-          fields:
-            - name: connection_state  
-              description: Current state of the connection
-              type: keyword
-            - name: type
-              description: Media type.
-              type: keyword
-        - name: mtu
-          description: Active max transmission unit.
-          type: int
-        - name: ndis
-          type: group
-          fields:
-            - name: version
-              description: Version of the NDIS
-              type: keyword
-
-        - name: subnet
-          description: Subnet mask for adapter.
+        - name: win_server
+          description: IP Address for WINS Server
           type: ip
-        - name: subnet_bit
-          description: Subnet mask prefix length
-          type: int
-        - name: virtual
-          description: Is a virtual adapter
-          type: bool
-        - name: vlan
-          type: group
-          fields:
-            - name: id
-              description: VLAN unique identifier.
-              type: keyword
         - name: wifi
-          type: group
+          description: Is wireless enabled.
+          type: bool
           fields:
-            - name: authentication
-              description: Authentification type.
-              type: keyword
-            - name: band
-              description: Wireless Adapters Frequency Band supported.
-              type: keyword
-            - name: bssid
-              description: The basic service set indentifier.
-            - name: channel
-              description: Corresponds to the wireless adapters frequency band.
-              type: keyword
-            - name: cipher
-              description: Encryption cipher
-              type: keyword
-            - name: radio_type
-              description: Wireless Access Point radio type/technoology.
-              type: keyword
-            - name: signal_percent
-              description: Percentage of the wireless connection signal.
-              type: keyword
+            - name: enabled
+              description: Is wireless enabled.
+              type: bool
+        - name: mac
+          description: 
+          type: keyword
+        - name: gateway
+          description: IP address for gateway
+          type: ip
+        - name: alias
+          description: Virtual adapter aliased address.
+          type: keyword
+        - name: subnet
+          description: Subnet mask for the adapter.
+          type: ip
+    - name: workgroup
+      description: 
+      type: keyword
 - name: script
   type: group
   fields:
     - name: current_duration
-      description: Current Scanner Script Duration.
-      type: long
-    - name: current_time
-      description: Current Script datetime.
-      type: date
+      description: Duration of script execution
+      type: float
     - name: name
       description: Scanner Script Name.
       type: keyword
-    - name: start
-      description: Scanner Start datetime.
+    - name: current_time
+      description: DateTime of script execution completion.
       type: date
-    - name: type
-      description: Scanner Script Type.
-      type: keyword
+    - name: start
+      description: DateTime of the start of script execution.
+      type: date
     - name: version
-      description: Scanner Script Version.
+      description: Version of TYCHON script.
+      type: keyword
+    - name: type
+      description: 
       type: keyword
 - name: elastic_agent
   type: group
@@ -166,3 +219,7 @@
     - name: version
       description: Elastic Agent Version.
       type: keyword
+- name: _id
+  description: 
+  type: keyword
+  fields:

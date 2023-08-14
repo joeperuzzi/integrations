@@ -33,6 +33,8 @@
 - external: ecs
   name: host.architecture
 - external: ecs
+  name: host.domain
+- external: ecs
   name: host.hostname
 - external: ecs
   name: host.id
@@ -41,29 +43,30 @@
 - external: ecs
   name: host.mac
 - external: ecs
-  name: host.type
-- external: ecs
-  name: host.uptime
-- external: ecs
-  name: host.os.name
-- external: ecs
   name: host.os.family
 - external: ecs
   name: host.os.version
 - external: ecs
-  name: package.name
+  name: host.os.type
 - external: ecs
-  name: package.version
+  name: host.os.platform
+- external: ecs
+  name: host.uptime
+- external: ecs
+  name: host.type
 - external: ecs
   name: package.description
 - external: ecs
   name: package.size
 - external: ecs
-  name: package.installed
-- external: ecs
   name: package.architecture
+- external: ecs
+  name: package.version
 - external: ecs
   name: package.path
 - external: ecs
+  name: package.name
+- external: ecs
+  name: package.installed
+- external: ecs
   name: package.type
-
