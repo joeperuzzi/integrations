@@ -1,5 +1,7 @@
 {
 	"id": "b85c2ad0-427c-11ee-83e4-c92ed141b9e5_1",
+	"type": "security-rule",
+    "attributes": {  
 	"name": "High number of SCAP Failures",
 	"tags": [
 		"TYCHON",
@@ -54,4 +56,5 @@
 	},
 	"throttle": "no_actions",
 	"actions": []
+}
 }

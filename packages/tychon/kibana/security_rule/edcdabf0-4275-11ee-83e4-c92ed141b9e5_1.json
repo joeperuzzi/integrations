@@ -1,5 +1,7 @@
 {
 	"id": "edcdabf0-4275-11ee-83e4-c92ed141b9e5_1",
+	"type": "security-rule",
+    "attributes": {  
 	"name": "System Volume Mounted to Drive",
 	"tags": [
 		"TYCHON",
@@ -47,4 +49,5 @@
 	"filters": [],
 	"throttle": "no_actions",
 	"actions": []
+}
 }

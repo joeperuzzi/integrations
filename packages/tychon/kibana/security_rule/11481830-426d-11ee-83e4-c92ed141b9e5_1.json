@@ -1,5 +1,7 @@
 {
 	"id": "11481830-426d-11ee-83e4-c92ed141b9e5_1",
+	"type": "security-rule",
+    "attributes": {  
 	"name": "Large number of failed Vulnerabilities ",
 	"tags": [
 		"CVE",
@@ -54,4 +56,5 @@
 	},
 	"throttle": "no_actions",
 	"actions": []
+}
 }

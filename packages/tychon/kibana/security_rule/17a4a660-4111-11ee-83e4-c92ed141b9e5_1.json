@@ -1,5 +1,7 @@
 {
 	"id": "17a4a660-4111-11ee-83e4-c92ed141b9e5_1",
+	"type": "security-rule",
+    "attributes": {  
 	"name": "Past Due Vulnerability Failed",
 	"tags": [
 		"TYCHON",
@@ -50,4 +52,5 @@
 	"filters": [],
 	"throttle": "no_actions",
 	"actions": []
+}
 }

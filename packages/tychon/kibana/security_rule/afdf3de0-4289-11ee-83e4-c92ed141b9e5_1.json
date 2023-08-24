@@ -1,5 +1,7 @@
 {
 	"id": "afdf3de0-4289-11ee-83e4-c92ed141b9e5_1",
+	"type": "security-rule",
+    "attributes": {  
 	"name": "New Device Discovered",
 	"tags": [
 		"TYCHON",
@@ -51,4 +53,5 @@
 	"data_view_id": "8532a0b4-2a02-4dfa-b6aa-aabe01125b61",
 	"throttle": "no_actions",
 	"actions": []
+}
 }

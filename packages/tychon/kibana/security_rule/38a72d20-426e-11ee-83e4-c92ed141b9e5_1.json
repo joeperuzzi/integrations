@@ -1,5 +1,7 @@
 {
 	"id": "38a72d20-426e-11ee-83e4-c92ed141b9e5_1",
+	"type": "security-rule",
+    "attributes": {  
 	"name": "TPM Compliance Failed",
 	"tags": [
 		"TYCHON",
@@ -49,4 +51,5 @@
 	"filters": [],
 	"throttle": "no_actions",
 	"actions": []
+}
 }

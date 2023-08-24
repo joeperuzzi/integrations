@@ -1,5 +1,7 @@
 {
 	"id": "75197a50-428d-11ee-83e4-c92ed141b9e5_1",
+	"type": "security-rule",
+    "attributes": {  
 	"name": "TYCHON Vulnerability Definitions Out of Date",
 	"tags": [
 		"TYCHON",
@@ -39,4 +41,5 @@
 	"filters": [],
 	"throttle": "no_actions",
 	"actions": []
+}
 }

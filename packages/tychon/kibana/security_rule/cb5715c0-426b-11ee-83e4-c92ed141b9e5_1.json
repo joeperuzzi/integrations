@@ -1,5 +1,7 @@
 {
 	"id": "cb5715c0-426b-11ee-83e4-c92ed141b9e5_1",
+	"type": "security-rule",
+    "attributes": {  
 	"name": "Endpoint Security Definitions are Out of Date",
 	"tags": [
 		"EPP",
@@ -47,4 +49,5 @@
 	"filters": [],
 	"throttle": "no_actions",
 	"actions": []
+}
 }

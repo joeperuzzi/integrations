@@ -1,5 +1,7 @@
 {
 	"id": "07dc1be0-4270-11ee-83e4-c92ed141b9e5_1",
+	"type": "security-rule",
+    "attributes": {  
 	"name": "Weak WIFI Authentication in use",
 	"tags": [],
 	"interval": "5m",
@@ -45,4 +47,5 @@
 	"filters": [],
 	"throttle": "no_actions",
 	"actions": []
+}
 }
