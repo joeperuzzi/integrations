@@ -24,7 +24,10 @@ processors:
       value: tychon
   - set:
       field: event.category
-      value: network adapter
+      value: [configuration]
+  - set:
+      field: event.type
+      value: [info]
   - split:
       field: host.uptime
       separator: "\\.+"

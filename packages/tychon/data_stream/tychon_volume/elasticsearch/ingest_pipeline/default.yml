@@ -24,7 +24,10 @@ processors:
       ignore_missing: true
   - set:
       field: event.category
-      value: volumes
+      value: [configuration]
+  - set:
+      field: event.type
+      value: [info]
   - set:
       field: volume.percent_full
       value: "0"

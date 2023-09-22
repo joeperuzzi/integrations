@@ -24,7 +24,10 @@ processors:
       value: tychon
   - set:
       field: event.category
-      value: cpu
+      value: [configuration]
+  - set:
+      field: event.type
+      value: [info]
   - gsub:
       field: host.cpu.speed
       pattern: "[^0-9]"

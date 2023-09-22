@@ -20,7 +20,10 @@ processors:
       value: tychon
   - set:
       field: event.category
-      value: epp
+      value: [configuration]
+  - set:
+      field: event.type
+      value: [info]
   - split:
       field: host.ipv4
       separator: ","
