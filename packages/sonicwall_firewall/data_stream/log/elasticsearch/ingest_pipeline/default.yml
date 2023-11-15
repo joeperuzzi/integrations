@@ -3,30 +3,25 @@ description: Pipeline for processing SonicWall firewall logs
 processors:
   - set:
       field: ecs.version
-      value: '8.8.0'
-
+      value: '8.10.0'
   - set:
       field: observer.vendor
       value: SonicWall
-
   - set:
       field: observer.product
       value: SonicOS
-
   - set:
       field: observer.type
       value: firewall
-
   - set:
       field: event.timezone
       value: "{{{_conf.tz_offset}}}"
       if: ctx?._conf?.tz_offset != null && ctx?._conf?.tz_offset != 'local'
-
   - rename:
       field: message
       target_field: event.original
       ignore_missing: true
-
+      if: ctx.event?.original == null
   - grok:
       field: event.original
       description: Extracts key-value pairs from original message
@@ -301,10 +296,15 @@ processors:
 #
   - convert:
       field: observer.hostname
-      target_field: observer.ip
+      target_field: _temp_.observer.ip
       type: ip
       ignore_missing: true
       ignore_failure: true
+  - append:
+      field: observer.ip
+      value: "{{{ _temp_.observer.ip }}}"
+      allow_duplicates: false
+      if: 'ctx._temp_?.observer?.ip != null'
 
   - remove:
       field: observer.hostname
@@ -1265,9 +1265,9 @@ processors:
       if: 'ctx.destination?.nat?.ip != null'
   - append:
       field: related.ip
-      value: "{{{ observer.ip }}}"
+      value: "{{{ _temp_.observer.ip }}}"
       allow_duplicates: false
-      if: 'ctx.observer?.ip != null'
+      if: 'ctx._temp_?.observer?.ip != null'
   - append:
       field: related.user
       value: "{{{ user.name }}}"

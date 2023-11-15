@@ -1,20 +1,15 @@
 ---
 description: Pipeline for Bravura Security Fabric events
 processors:
-  - set:
-      field: event.ingested
-      value: '{{_ingest.timestamp}}'
-
   - convert:
       field: event.code
       type: string
       ignore_missing: true
-
   - rename:
       field: message
       target_field: event.original
       ignore_missing: true
-
+      if: ctx.event?.original == null
   - grok:
       field: event.original
       patterns:
@@ -355,7 +350,7 @@ processors:
 
   - set:
       field: ecs.version
-      value: '8.8.0'
+      value: '8.10.0'
 
   - set:
       field: log.level

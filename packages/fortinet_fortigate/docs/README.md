@@ -6,6 +6,10 @@ This integration is for Fortinet FortiGate logs sent in the syslog format.
 
 This integration has been tested against FortiOS version 6.0.x and 6.2.x. Versions above this are expected to work but have not been tested.
 
+## Note
+
+- When using the TCP input, be careful with the configured TCP framing. According to the [Fortigate reference](https://docs.fortinet.com/document/fortigate/7.4.0/cli-reference/405620/config-log-syslogd-setting), framing should be set to `rfc6587` when the syslog mode is reliable.
+
 ### Log
 
 The `log` dataset collects JFortinet FortiGate logs.
@@ -16,8 +20,8 @@ An example event for `log` looks as following:
 {
     "@timestamp": "2019-05-15T18:03:36.000Z",
     "agent": {
-        "ephemeral_id": "7dc43a3d-5d1a-4ba7-8834-fcc613929c0b",
-        "id": "8b10c3ab-9f4b-4ca0-b5ad-b6200b7fe65d",
+        "ephemeral_id": "65ad5a4b-72ad-4878-905c-6f7f2a959ee4",
+        "id": "2f63344b-97c9-4998-9535-0fc6454ddd4b",
         "name": "docker-fleet-agent",
         "type": "filebeat",
         "version": "8.9.0"
@@ -44,11 +48,11 @@ An example event for `log` looks as following:
         "port": 443
     },
     "ecs": {
-        "version": "8.8.0"
+        "version": "8.10.0"
     },
     "elastic_agent": {
-        "id": "8b10c3ab-9f4b-4ca0-b5ad-b6200b7fe65d",
-        "snapshot": true,
+        "id": "2f63344b-97c9-4998-9535-0fc6454ddd4b",
+        "snapshot": false,
         "version": "8.9.0"
     },
     "event": {
@@ -59,9 +63,9 @@ An example event for `log` looks as following:
         ],
         "code": "1059028704",
         "dataset": "fortinet_fortigate.log",
-        "ingested": "2023-06-15T20:11:05Z",
+        "ingested": "2023-10-26T15:15:25Z",
         "kind": "event",
-        "original": "\u003c190\u003edate=2019-05-15 time=18:03:36 logid=\"1059028704\" type=\"utm\" subtype=\"app-ctrl\" eventtype=\"app-ctrl-all\" level=\"information\" vd=\"root\" eventtime=1557968615 appid=40568 srcip=10.1.100.22 dstip=67.43.156.14 srcport=50798 dstport=443 srcintf=\"port10\" srcintfrole=\"lan\" dstintf=\"port9\" dstintfrole=\"wan\" proto=6 service=\"HTTPS\" direction=\"outgoing\" policyid=1 sessionid=4414 applist=\"block-social.media\" appcat=\"Web.Client\" app=\"HTTPS.BROWSER\" action=\"pass\" hostname=\"www.dailymotion.com\" incidentserialno=1962906680 url=\"/\" msg=\"Web.Client: HTTPS.BROWSER,\" apprisk=\"medium\" scertcname=\"*.dailymotion.com\" scertissuer=\"DigiCert SHA2 High Assurance Server CA\"",
+        "original": "<190>date=2019-05-15 time=18:03:36 logid=\"1059028704\" type=\"utm\" subtype=\"app-ctrl\" eventtype=\"app-ctrl-all\" level=\"information\" vd=\"root\" eventtime=1557968615 appid=40568 srcip=10.1.100.22 dstip=67.43.156.14 srcport=50798 dstport=443 srcintf=\"port10\" srcintfrole=\"lan\" dstintf=\"port9\" dstintfrole=\"wan\" proto=6 service=\"HTTPS\" direction=\"outgoing\" policyid=1 sessionid=4414 applist=\"block-social.media\" appcat=\"Web.Client\" app=\"HTTPS.BROWSER\" action=\"pass\" hostname=\"www.dailymotion.com\" incidentserialno=1962906680 url=\"/\" msg=\"Web.Client: HTTPS.BROWSER,\" apprisk=\"medium\" scertcname=\"*.dailymotion.com\" scertissuer=\"DigiCert SHA2 High Assurance Server CA\"",
         "outcome": "success",
         "start": "2019-05-16T01:03:35.000Z",
         "type": [
@@ -88,7 +92,7 @@ An example event for `log` looks as following:
     "log": {
         "level": "information",
         "source": {
-            "address": "172.23.0.4:52312"
+            "address": "172.24.0.4:57264"
         },
         "syslog": {
             "facility": {
@@ -204,6 +208,7 @@ An example event for `log` looks as following:
 | destination.geo.region_iso_code | Region ISO code. | keyword |
 | destination.geo.region_name | Region name. | keyword |
 | destination.ip | IP address of the destination (IPv4 or IPv6). | ip |
+| destination.mac | MAC address of the destination. The notation format from RFC 7042 is suggested: Each octet (that is, 8-bit byte) is represented by two [uppercase] hexadecimal digits giving the value of the octet as an unsigned integer. Successive octets are separated by a hyphen. | keyword |
 | destination.nat.ip | Translated ip of destination based NAT sessions (e.g. internet to private DMZ) Typically used with load balancers, firewalls, or routers. | ip |
 | destination.nat.port | Port the source session is translated to by NAT Device. Typically used with load balancers, firewalls, or routers. | long |
 | destination.packets | Packets sent from the destination to the source. | long |
@@ -231,14 +236,14 @@ An example event for `log` looks as following:
 | event.category | This is one of four ECS Categorization Fields, and indicates the second level in the ECS category hierarchy. `event.category` represents the "big buckets" of ECS categories. For example, filtering on `event.category:process` yields all events relating to process activity. This field is closely related to `event.type`, which is used as a subcategory. This field is an array. This will allow proper categorization of some events that fall in multiple categories. | keyword |
 | event.code | Identification code for this event, if one exists. Some event sources use event codes to identify messages unambiguously, regardless of message language or wording adjustments over time. An example of this is the Windows Event ID. | keyword |
 | event.dataset | Name of the dataset. | constant_keyword |
-| event.duration | Duration of the event in nanoseconds. If event.start and event.end are known this value should be the difference between the end and start time. | long |
+| event.duration | Duration of the event in nanoseconds. If `event.start` and `event.end` are known this value should be the difference between the end and start time. | long |
 | event.ingested | Timestamp when an event arrived in the central data store. This is different from `@timestamp`, which is when the event originally occurred.  It's also different from `event.created`, which is meant to capture the first time an agent saw the event. In normal conditions, assuming no tampering, the timestamps should chronologically look like this: `@timestamp` \< `event.created` \< `event.ingested`. | date |
-| event.kind | This is one of four ECS Categorization Fields, and indicates the highest level in the ECS category hierarchy. `event.kind` gives high-level information about what type of information the event contains, without being specific to the contents of the event. For example, values of this field distinguish alert events from metric events. The value of this field can be used to inform how these kinds of events should be handled. They may warrant different retention, different access control, it may also help understand whether the data coming in at a regular interval or not. | keyword |
+| event.kind | This is one of four ECS Categorization Fields, and indicates the highest level in the ECS category hierarchy. `event.kind` gives high-level information about what type of information the event contains, without being specific to the contents of the event. For example, values of this field distinguish alert events from metric events. The value of this field can be used to inform how these kinds of events should be handled. They may warrant different retention, different access control, it may also help understand whether the data is coming in at a regular interval or not. | keyword |
 | event.message | Log message optimized for viewing in a log viewer. | text |
 | event.module | Name of the module this data is coming from. | constant_keyword |
 | event.outcome | This is one of four ECS Categorization Fields, and indicates the lowest level in the ECS category hierarchy. `event.outcome` simply denotes whether the event represents a success or a failure from the perspective of the entity that produced the event. Note that when a single transaction is described in multiple events, each event may populate different values of `event.outcome`, according to their perspective. Also note that in the case of a compound event (a single event that contains multiple logical events), this field should be populated with the value that best captures the overall success or failure from the perspective of the event producer. Further note that not all events will have an associated outcome. For example, this field is generally not populated for metric events, events with `event.type:info`, or any events for which an outcome does not make logical sense. | keyword |
 | event.reference | Reference URL linking to additional information about this event. This URL links to a static definition of this event. Alert events, indicated by `event.kind:alert`, are a common use case for this field. | keyword |
-| event.start | event.start contains the date when the event started or when the activity was first observed. | date |
+| event.start | `event.start` contains the date when the event started or when the activity was first observed. | date |
 | event.timezone | This field should be populated when the event's timestamp does not include timezone information already (e.g. default Syslog timestamps). It's optional otherwise. Acceptable timezone formats are: a canonical ID (e.g. "Europe/Amsterdam"), abbreviated (e.g. "EST") or an HH:mm differential (e.g. "-05:00"). | keyword |
 | event.type | This is one of four ECS Categorization Fields, and indicates the third level in the ECS category hierarchy. `event.type` represents a categorization "sub-bucket" that, when used along with the `event.category` field values, enables filtering events down to a level appropriate for single visualization. This field is an array. This will allow proper categorization of some events that fall in multiple event types. | keyword |
 | file.extension | File extension, excluding the leading dot. Note that when the file name has multiple extensions (example.tar.gz), only the last one should be captured ("gz", not "tar.gz"). | keyword |
@@ -247,8 +252,7 @@ An example event for `log` looks as following:
 | fortinet.file.hash.crc32 | CRC32 Hash of file | keyword |
 | fortinet.firewall.acct_stat | Accounting state (RADIUS) | keyword |
 | fortinet.firewall.acktime | Alarm Acknowledge Time | keyword |
-| fortinet.firewall.act | Action | keyword |
-| fortinet.firewall.action | Status of the session | keyword |
+| fortinet.firewall.action | Action | keyword |
 | fortinet.firewall.activity | HA activity message | keyword |
 | fortinet.firewall.addr | IP Address | ip |
 | fortinet.firewall.addr_type | Address Type | keyword |
@@ -290,10 +294,12 @@ An example event for `log` looks as following:
 | fortinet.firewall.banned_rule | NAC quarantine Banned Rule Name | keyword |
 | fortinet.firewall.banned_src | NAC quarantine Banned Source IP | keyword |
 | fortinet.firewall.banword | Banned word | keyword |
+| fortinet.firewall.bibandwidth | Icoming and outcoming bandwidth | keyword |
 | fortinet.firewall.botnetdomain | Botnet Domain Name | keyword |
 | fortinet.firewall.botnetip | Botnet IP Address | ip |
 | fortinet.firewall.bssid | Service Set ID | keyword |
 | fortinet.firewall.call_id | Caller ID | keyword |
+| fortinet.firewall.carrier | The FortiOS Carrier | keyword |
 | fortinet.firewall.carrier_ep | The FortiOS Carrier end-point identification | keyword |
 | fortinet.firewall.cat | DNS category ID | integer |
 | fortinet.firewall.category | Authentication category | keyword |
@@ -429,14 +435,19 @@ An example event for `log` looks as following:
 | fortinet.firewall.handshake | SSL Handshake | keyword |
 | fortinet.firewall.hash | Hash value of downloaded file | keyword |
 | fortinet.firewall.hbdn_reason | Heartbeat down reason | keyword |
+| fortinet.firewall.healthcheck | Healtcheck name | keyword |
 | fortinet.firewall.highcount | Highcount fabric summary | integer |
 | fortinet.firewall.host | Hostname | keyword |
 | fortinet.firewall.iaid | DHCPv6 id | keyword |
+| fortinet.firewall.iccid | SIM Card ICCID number | keyword |
 | fortinet.firewall.icmpcode | Destination Port of the ICMP message | keyword |
 | fortinet.firewall.icmpid | Source port of the ICMP message | keyword |
 | fortinet.firewall.icmptype | The type of ICMP message | keyword |
 | fortinet.firewall.identifier | Network traffic identifier | integer |
+| fortinet.firewall.imei | Device IMEI | keyword |
+| fortinet.firewall.imsi | Subscriber IMSI | keyword |
 | fortinet.firewall.in_spi | IPSEC inbound SPI | keyword |
+| fortinet.firewall.inbandwidth | Icoming bandwidth | keyword |
 | fortinet.firewall.incidentserialno | Incident serial number | integer |
 | fortinet.firewall.infected | Infected MMS | integer |
 | fortinet.firewall.infectedfilelevel | DLP infected file level | integer |
@@ -448,10 +459,13 @@ An example event for `log` looks as following:
 | fortinet.firewall.invalidmac | The MAC address with invalid OUI | keyword |
 | fortinet.firewall.ip | Related IP | ip |
 | fortinet.firewall.iptype | Related IP type | keyword |
+| fortinet.firewall.jitter | Communitation jitter | float |
 | fortinet.firewall.keyword | Keyword used for search | keyword |
 | fortinet.firewall.kind | VOIP kind | keyword |
+| fortinet.firewall.kxproto | Key exchange protocol | keyword |
 | fortinet.firewall.lanin | LAN incoming traffic in bytes | long |
 | fortinet.firewall.lanout | LAN outbound traffic in bytes | long |
+| fortinet.firewall.latency | Communication latency. | float |
 | fortinet.firewall.lease | DHCP lease | integer |
 | fortinet.firewall.license_limit | Maximum Number of FortiClients for the License | keyword |
 | fortinet.firewall.limit | Virtual Domain Resource Limit | integer |
@@ -472,7 +486,9 @@ An example event for `log` looks as following:
 | fortinet.firewall.meshmode | Wireless mesh mode | keyword |
 | fortinet.firewall.message_type | VOIP message type | keyword |
 | fortinet.firewall.method | HTTP method | keyword |
+| fortinet.firewall.metric | Metric name | keyword |
 | fortinet.firewall.mgmtcnt | The number of unauthorized client flooding managemet frames | integer |
+| fortinet.firewall.mitm | Indicates if it SSL MITM inspection is enabled. | keyword |
 | fortinet.firewall.mode | IPSEC mode | keyword |
 | fortinet.firewall.module | PCI-DSS module | keyword |
 | fortinet.firewall.monitor-name | Health Monitor Name | keyword |
@@ -488,6 +504,7 @@ An example event for `log` looks as following:
 | fortinet.firewall.newchannel | New Channel Number | integer |
 | fortinet.firewall.newchassisid | New Chassis ID | integer |
 | fortinet.firewall.newslot | New Slot Number | integer |
+| fortinet.firewall.newvalue | New Value | keyword |
 | fortinet.firewall.nextstat | Time interval in seconds for the next statistics. | integer |
 | fortinet.firewall.nf_type | Notification Type | keyword |
 | fortinet.firewall.noise | Wifi Noise | integer |
@@ -497,6 +514,7 @@ An example event for `log` looks as following:
 | fortinet.firewall.oldchassisid | Original Chassis Number | integer |
 | fortinet.firewall.oldslot | Original Slot Number | integer |
 | fortinet.firewall.oldsn | Old Serial number | keyword |
+| fortinet.firewall.oldvalue | Old Value | keyword |
 | fortinet.firewall.oldwprof | Old Web Filter Profile | keyword |
 | fortinet.firewall.onwire | A flag to indicate if the AP is onwire or not | keyword |
 | fortinet.firewall.opercountry | Operating Country | keyword |
@@ -504,7 +522,9 @@ An example event for `log` looks as following:
 | fortinet.firewall.osname | Operating System name | keyword |
 | fortinet.firewall.osversion | Operating System version | keyword |
 | fortinet.firewall.out_spi | Out SPI | keyword |
+| fortinet.firewall.outbandwidth | Outcoming bandwidth | keyword |
 | fortinet.firewall.outintf | Out interface | keyword |
+| fortinet.firewall.packetloss | Packet loss percentage. | keyword |
 | fortinet.firewall.passedcount | Fabric passed count | integer |
 | fortinet.firewall.passwd | Changed user password information | keyword |
 | fortinet.firewall.path | Path of looped configuration for security fabric | keyword |
@@ -512,8 +532,11 @@ An example event for `log` looks as following:
 | fortinet.firewall.peer_notif | VPN peer notification | keyword |
 | fortinet.firewall.phase2_name | VPN phase2 name | keyword |
 | fortinet.firewall.phone | VOIP Phone | keyword |
+| fortinet.firewall.phonenumber | Phone number | keyword |
 | fortinet.firewall.pid | Process ID | integer |
+| fortinet.firewall.plan | Subscriber plan | keyword |
 | fortinet.firewall.policytype | Policy Type | keyword |
+| fortinet.firewall.poluuid | Policy UUID | keyword |
 | fortinet.firewall.poolname | IP Pool name | keyword |
 | fortinet.firewall.port | Log upload error port | integer |
 | fortinet.firewall.portbegin | IP Pool port number to begin | integer |
@@ -551,6 +574,8 @@ An example event for `log` looks as following:
 | fortinet.firewall.request_name | VOIP request name | keyword |
 | fortinet.firewall.result | VPN phase result | keyword |
 | fortinet.firewall.role | VPN Phase 2 role | keyword |
+| fortinet.firewall.rsrp | Reference signal received power | integer |
+| fortinet.firewall.rsrq | Reference signal received quality | integer |
 | fortinet.firewall.rssi | Received signal strength indicator | integer |
 | fortinet.firewall.rsso_key | RADIUS SSO attribute value | keyword |
 | fortinet.firewall.ruledata | Rule data | keyword |
@@ -578,7 +603,12 @@ An example event for `log` looks as following:
 | fortinet.firewall.shapersentname | Traffic shaper name for sent traffic | keyword |
 | fortinet.firewall.shapingpolicyid | Traffic shaper policy ID | integer |
 | fortinet.firewall.signal | Wireless rogue API signal | integer |
+| fortinet.firewall.signalstrength | Signal strength | integer |
+| fortinet.firewall.sinr | Signal to interference and noise ratio | integer |
 | fortinet.firewall.size | Email size in bytes | long |
+| fortinet.firewall.ski | x509 Subject Key Identifier | keyword |
+| fortinet.firewall.slamap | SLA map. | keyword |
+| fortinet.firewall.slatargetid | ID of the targeted SLA. | keyword |
 | fortinet.firewall.slot | Slot number | integer |
 | fortinet.firewall.sn | Security fabric serial number | keyword |
 | fortinet.firewall.snclosest | SN of the AP closest to the rogue AP | keyword |
@@ -618,6 +648,7 @@ An example event for `log` looks as following:
 | fortinet.firewall.sync_type | The sync type with the master | keyword |
 | fortinet.firewall.sysuptime | System uptime | keyword |
 | fortinet.firewall.tamac | the MAC address of Transmitter, if none, then Receiver | keyword |
+| fortinet.firewall.temperature | Temperature | integer |
 | fortinet.firewall.threattype | WIDS threat type | keyword |
 | fortinet.firewall.time | Time of the event | keyword |
 | fortinet.firewall.timestamp | Timestamp of the event | keyword |
@@ -647,6 +678,7 @@ An example event for `log` looks as following:
 | fortinet.firewall.used | Number of Used IPs | integer |
 | fortinet.firewall.used_for_type | Connection for the type | integer |
 | fortinet.firewall.utmaction | Security action performed by UTM | keyword |
+| fortinet.firewall.utmref | UTM reference | keyword |
 | fortinet.firewall.vap | Virtual AP | keyword |
 | fortinet.firewall.vapmode | Virtual AP mode | keyword |
 | fortinet.firewall.vcluster | virtual cluster id | integer |
@@ -695,6 +727,8 @@ An example event for `log` looks as following:
 | host.os.platform | Operating system platform (such centos, ubuntu, windows). | keyword |
 | host.os.version | Operating system version as a raw string. | keyword |
 | host.type | Type of host. For Cloud providers this can be the machine type like `t2.medium`. If vm, this could be the container, for example, or other information meaningful in your environment. | keyword |
+| http.request.method | HTTP request method. The value should retain its casing from the original event. For example, `GET`, `get`, and `GeT` are all considered valid values for this field. | keyword |
+| http.request.referrer | Referrer for this HTTP request. | keyword |
 | input.type | Type of Filebeat input. | keyword |
 | log.file.path | Path to the log file. | keyword |
 | log.flags | Flags for the log file. | keyword |
@@ -753,12 +787,28 @@ An example event for `log` looks as following:
 | source.user.name | Short name or login of the user. | keyword |
 | source.user.name.text | Multi-field of `source.user.name`. | match_only_text |
 | tags | List of keywords used to tag each event. | keyword |
+| threat.feed.name | The name of the threat feed in UI friendly format. | keyword |
+| tls.cipher | String indicating the cipher used during the current connection. | keyword |
 | tls.client.issuer | Distinguished name of subject of the issuer of the x.509 certificate presented by the client. | keyword |
 | tls.client.server_name | Also called an SNI, this tells the server which hostname to which the client is attempting to connect to. When this value is available, it should get copied to `destination.domain`. | keyword |
 | tls.client.x509.issuer.common_name | List of common name (CN) of issuing certificate authority. | keyword |
+| tls.client.x509.public_key_algorithm | Algorithm used to generate the public key. | keyword |
+| tls.curve | String indicating the curve used for the given cipher, when applicable. | keyword |
+| tls.established | Boolean flag indicating if the TLS negotiation was successful and transitioned to an encrypted tunnel. | boolean |
+| tls.server.hash.sha1 | Certificate fingerprint using the SHA1 digest of DER-encoded version of certificate offered by the server. For consistency with other hash values, this value should be formatted as an uppercase hash. | keyword |
 | tls.server.issuer | Subject of the issuer of the x.509 certificate presented by the server. | keyword |
+| tls.server.not_after | Timestamp indicating when server certificate is no longer considered valid. | date |
+| tls.server.not_before | Timestamp indicating when server certificate is first considered valid. | date |
+| tls.server.x509.alternative_names | List of subject alternative names (SAN). Name types vary by certificate authority and certificate type but commonly contain IP addresses, DNS names (and wildcards), and email addresses. | keyword |
 | tls.server.x509.issuer.common_name | List of common name (CN) of issuing certificate authority. | keyword |
+| tls.server.x509.not_after | Time at which the certificate is no longer considered valid. | date |
+| tls.server.x509.not_before | Time at which the certificate is first considered valid. | date |
+| tls.server.x509.public_key_algorithm | Algorithm used to generate the public key. | keyword |
+| tls.server.x509.public_key_size | The size of the public key space in bits. | long |
+| tls.server.x509.serial_number | Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters. | keyword |
 | tls.server.x509.subject.common_name | List of common names (CN) of subject. | keyword |
+| tls.version | Numeric part of the version parsed from the original string. | keyword |
+| tls.version_protocol | Normalized lowercase protocol name parsed from original string. | keyword |
 | url.domain | Domain of the url, such as "www.elastic.co". In some cases a URL may refer to an IP and/or port directly, without a domain name. In this case, the IP address would go to the `domain` field. If the URL contains a literal IPv6 address enclosed by `[` and `]` (IETF RFC 2732), the `[` and `]` characters should also be captured in the `domain` field. | keyword |
 | url.path | Path of the request, such as "/search". | wildcard |
 | user_agent.original | Unparsed user_agent string. | keyword |

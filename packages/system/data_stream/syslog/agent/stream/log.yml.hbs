@@ -13,8 +13,11 @@ processors:
 {{/if}}
 {{#if tags.length}}
 tags:
-{{#each tags as |tag i|}}
-- {{tag}}
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
 {{/each}}
 {{/if}}
 {{#if ignore_older}}

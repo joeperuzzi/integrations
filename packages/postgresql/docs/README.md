@@ -65,7 +65,7 @@ persistent connections, so enable with care.
 | error.code | Error code describing the error. | keyword |
 | error.id | Unique identifier for the error. | keyword |
 | error.message | Error message. | match_only_text |
-| event.category | Event category (e.g. database) | keyword |
+| event.category | This is one of four ECS Categorization Fields, and indicates the second level in the ECS category hierarchy. `event.category` represents the "big buckets" of ECS categories. For example, filtering on `event.category:process` yields all events relating to process activity. This field is closely related to `event.type`, which is used as a subcategory. This field is an array. This will allow proper categorization of some events that fall in multiple categories. | keyword |
 | event.code | Identification code for this event | keyword |
 | event.dataset | Event dataset | constant_keyword |
 | event.duration | Duration of the event in nanoseconds. If event.start and event.end are known this value should be the difference between the end and start time. | long |
@@ -242,6 +242,7 @@ An example event for `activity` looks as following:
 | Field | Description | Type |
 |---|---|---|
 | @timestamp | Event timestamp. | date |
+| agent.id |  | keyword |
 | cloud.account.id | The cloud account or organization id used to identify different entities in a multi-tenant environment. Examples: AWS account id, Google Cloud ORG Id, or other unique identifier. | keyword |
 | cloud.availability_zone | Availability zone in which this host is running. | keyword |
 | cloud.image.id | Image ID for the cloud instance. | keyword |
@@ -282,6 +283,7 @@ An example event for `activity` looks as following:
 | host.type | Type of host. For Cloud providers this can be the machine type like `t2.medium`. If vm, this could be the container, for example, or other information meaningful in your environment. | keyword |
 | postgresql.activity.application_name | Name of the application that is connected to this backend. | keyword |
 | postgresql.activity.backend_start | Time when this process was started, i.e., when the client connected to the server. | date |
+| postgresql.activity.backend_type | Type of backend | keyword |
 | postgresql.activity.client.address | IP address of the client connected to this backend. | keyword |
 | postgresql.activity.client.hostname | Host name of the connected client, as reported by a reverse DNS lookup of client_addr. | keyword |
 | postgresql.activity.client.port | TCP port number that the client is using for communication with this backend, or -1 if a Unix socket is used. | long |
@@ -289,12 +291,15 @@ An example event for `activity` looks as following:
 | postgresql.activity.database.oid | OID of the database this backend is connected to. | long |
 | postgresql.activity.pid | Process ID of this backend. | long |
 | postgresql.activity.query | Text of this backend's most recent query. If state is active this field shows the currently executing query. In all other states, it shows the last query that was executed. | keyword |
+| postgresql.activity.query_id | Unique ID representing the query executed | keyword |
 | postgresql.activity.query_start | Time when the currently active query was started, or if state is not active, when the last query was started. | date |
 | postgresql.activity.state | Current overall state of this backend. Possible values are:    \* active: The backend is executing a query.   \* idle: The backend is waiting for a new client command.   \* idle in transaction: The backend is in a transaction, but is not     currently executing a query.   \* idle in transaction (aborted): This state is similar to idle in     transaction, except one of the statements in the transaction caused     an error.   \* fastpath function call: The backend is executing a fast-path function.   \* disabled: This state is reported if track_activities is disabled in this backend. | keyword |
 | postgresql.activity.state_change | Time when the state was last changed. | date |
 | postgresql.activity.transaction_start | Time when this process' current transaction was started. | date |
 | postgresql.activity.user.id | OID of the user logged into this backend. | long |
 | postgresql.activity.user.name | Name of the user logged into this backend. | keyword |
+| postgresql.activity.wait_event | Wait event name if backend is currently waiting, otherwise NULL | keyword |
+| postgresql.activity.wait_event_type | The type of event for which the backend is waiting, if any; otherwise NULL. | keyword |
 | postgresql.activity.waiting | True if this backend is currently waiting on a lock. | boolean |
 | service.address | Address where data about this service was collected from. This should be a URI, network address (ipv4:port or [ipv6]:port) or a resource path (sockets). | keyword |
 | service.type | The type of the service data is collected from. The type can be used to group and correlate logs and metrics from one service type. Example: If logs or metrics are collected from Elasticsearch, `service.type` would be `elasticsearch`. | keyword |
@@ -749,6 +754,7 @@ An example event for `statement` looks as following:
 | Field | Description | Type | Metric Type |
 |---|---|---|---|
 | @timestamp | Event timestamp. | date |  |
+| agent.id |  | keyword |  |
 | cloud.account.id | The cloud account or organization id used to identify different entities in a multi-tenant environment. Examples: AWS account id, Google Cloud ORG Id, or other unique identifier. | keyword |  |
 | cloud.availability_zone | Availability zone in which this host is running. | keyword |  |
 | cloud.image.id | Image ID for the cloud instance. | keyword |  |
